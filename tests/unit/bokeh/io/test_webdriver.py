@@ -17,7 +17,8 @@ import pytest ; pytest
 # Standard library imports
 
 # External imports
-import selenium.webdriver.phantomjs.webdriver
+import selenium.webdriver.firefox.webdriver
+import selenium.webdriver.chrome.webdriver
 
 # Bokeh imports
 
@@ -36,18 +37,17 @@ import bokeh.io.webdriver as biw
 # Dev API
 #-----------------------------------------------------------------------------
 
-def test_create_phantomjs_webdriver():
-    d = biw.create_phantomjs_webdriver()
-    assert isinstance(d, selenium.webdriver.phantomjs.webdriver.WebDriver)
+def test_create_firefox_webdriver():
+    d = biw.create_firefox_webdriver()
+    assert isinstance(d, selenium.webdriver.firefox.webdriver.WebDriver)
 
-def test_terminate_webdriver():
-    d = biw.create_phantomjs_webdriver()
-    assert d.service.process is not None
-    biw.terminate_webdriver(d)
-    assert d.service.process is None
+def test_create_chromium_webdriver():
+    d = biw.create_chromium_webdriver()
+    assert isinstance(d, selenium.webdriver.chrome.webdriver.WebDriver)
 
 _driver_map = {
-    'phantomjs': selenium.webdriver.phantomjs.webdriver.WebDriver,
+    'firefox': selenium.webdriver.firefox.webdriver.WebDriver,
+    'chromium': selenium.webdriver.chrome.webdriver.WebDriver,
 }
 
 class Test_webdriver_control(object):
@@ -56,7 +56,7 @@ class Test_webdriver_control(object):
         # so create a new instance only to check default values
         wc = biw._WebdriverState()
         assert wc.reuse == True
-        assert wc.kind == "phantomjs"
+        assert wc.kind == "firefox"
         assert wc.current is None
 
     def test_get_with_reuse(self):
@@ -87,7 +87,7 @@ class Test_webdriver_control(object):
         biw.webdriver_control.reuse = True
         biw.webdriver_control.reset()
 
-    @pytest.mark.parametrize('kind', ['phantomjs'])
+    @pytest.mark.parametrize('kind', ['firefox', 'chromium'])
     def test_create(self, kind):
         biw.webdriver_control.kind = kind
         assert biw.webdriver_control.kind == kind

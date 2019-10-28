@@ -63,7 +63,7 @@ NetworkX
     Necessary to use the `from_networkx` function to generate Bokeh graph
     renderers directly from NetworkX data.
 
-Selenium, PhantomJS
+Selenium, GeckoDriver, Firefox
     Necessary for :ref:`userguide_export` to PNG and SVG images.
 
 Sphinx

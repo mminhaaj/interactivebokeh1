@@ -32,20 +32,18 @@ from PIL import Image
 from ..embed import file_html
 from ..resources import INLINE
 from .util import default_filename
+from .webdriver import webdriver_control
 
 #-----------------------------------------------------------------------------
 # Globals and constants
 #-----------------------------------------------------------------------------
 
 __all__ = (
-    'create_webdriver',
     'export_png',
     'export_svgs',
     'get_layout_html',
     'get_screenshot_as_png',
     'get_svgs',
-    'terminate_webdriver',
-    'webdriver_control',
 )
 
 #-----------------------------------------------------------------------------
@@ -165,20 +163,6 @@ def export_svgs(obj, filename=None, height=None, width=None, webdriver=None, tim
 # Dev API
 #-----------------------------------------------------------------------------
 
-# this is part of the API for this module
-from .webdriver import webdriver_control
-from .webdriver import terminate_webdriver # for back compat
-
-def create_webdriver():
-    ''' Create a new webdriver.
-
-    .. note ::
-        Here for compatibility. Prefer methods on the webdriver_control
-        object.
-
-    '''
-    return webdriver_control.create()
-
 def get_screenshot_as_png(obj, driver=None, timeout=5, **kwargs):
     ''' Get a screenshot of a ``LayoutDOM`` object.
 
@@ -210,9 +194,6 @@ def get_screenshot_as_png(obj, driver=None, timeout=5, **kwargs):
 
         web_driver.get("file:///" + tmp.path)
         web_driver.maximize_window()
-
-        ## resize for PhantomJS compat
-        web_driver.execute_script("document.body.style.width = '100%';")
 
         wait_until_render_complete(web_driver, timeout)
 

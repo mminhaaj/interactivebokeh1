@@ -24,7 +24,7 @@ from PIL import Image
 # Bokeh imports
 from bokeh.layouts import row
 from bokeh.models import ColumnDataSource, Plot, Range1d, Rect
-from bokeh.io.webdriver import webdriver_control, terminate_webdriver
+from bokeh.io.webdriver import webdriver_control
 from bokeh.plotting import figure
 from bokeh.resources import Resources
 
@@ -39,7 +39,7 @@ import bokeh.io.export as bie
 def webdriver():
     driver = webdriver_control.create()
     yield driver
-    terminate_webdriver(driver)
+    webdriver_control.terminate(driver)
 
 #-----------------------------------------------------------------------------
 # General API

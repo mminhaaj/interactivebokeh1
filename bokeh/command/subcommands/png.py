@@ -61,7 +61,8 @@ import sys
 # External imports
 
 # Bokeh imports
-from ...io.export import get_screenshot_as_png, create_webdriver, terminate_webdriver
+from ...io.export import get_screenshot_as_png
+from ...io.webdriver import webdriver_control
 from ..util import set_single_plot_width_height
 from .file_output import FileOutputSubcommand
 
@@ -114,11 +115,11 @@ class PNG(FileOutputSubcommand):
         '''
 
         '''
-        self.driver = create_webdriver()
+        self.driver = webdriver_control.create()
         try:
             super().invoke(args)
         finally:
-            terminate_webdriver(self.driver)
+            webdriver_control.terminate(self.driver)
 
     def write_file(self, args, filename, doc):
         '''
